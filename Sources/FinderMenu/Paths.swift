@@ -37,6 +37,14 @@ func unusedFilename(_ filename: String, in dir: String) -> String {
     return candidate
 }
 
+// Open in Claude: Claude's own link for a new Code session in a folder. Handing Claude the folder itself
+// opens it in Cowork instead. Claude reads the query like a web form, where "+" is a space, so encode it too.
+func claudeLink(for dir: String) -> URL? {
+    var allowed = CharacterSet.urlQueryAllowed
+    allowed.remove(charactersIn: "&+=")
+    return dir.addingPercentEncoding(withAllowedCharacters: allowed).flatMap { URL(string: "claude://code/new?folder=" + $0) }
+}
+
 // A path as an AppleScript string literal. Folder names can contain quotes and backslashes,
 // and anything left unescaped would run as AppleScript.
 func appleScriptString(_ s: String) -> String {

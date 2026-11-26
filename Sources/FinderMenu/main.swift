@@ -39,6 +39,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 if let appID, !editors.contains(where: { $0.id == appID }) { continue }
                 openFolder(dir, appID: appID)
                 return
+            case "claude":
+                guard let link = claudeLink(for: dir) else { continue }
+                NSWorkspace.shared.open(link, configuration: NSWorkspace.OpenConfiguration()) { _, _ in
+                    DispatchQueue.main.async { self.finish() }
+                }
+                return
             case "up": goUp(from: dir)
             default: break
             }

@@ -47,6 +47,9 @@ class FinderMenuSync: FIFinderSync {
                 }
             case "terminal": entry.action = #selector(openTerminal(_:))
             case "open-with": entry.submenu = Self.openWithMenu()
+            case "claude":
+                guard NSWorkspace.shared.urlForApplication(withBundleIdentifier: claudeAppID) != nil else { continue }
+                entry.action = #selector(openInClaude(_:))
             case "copy-path": entry.action = #selector(copyPath(_:))
             case "copy-name": entry.action = #selector(copyName(_:))
             case "parent-folder":
@@ -166,6 +169,11 @@ class FinderMenuSync: FIFinderSync {
         guard let tag = (sender as? NSMenuItem)?.tag, editors.indices.contains(tag),
               let target = clickedTarget else { return }
         callHelper("openwith", target.path, app: editors[tag].id)
+    }
+
+    @objc func openInClaude(_ sender: AnyObject?) {
+        guard let target = clickedTarget else { return }
+        callHelper("claude", target.path)
     }
 
     @objc func openWithOther(_ sender: AnyObject?) {

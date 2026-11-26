@@ -12,6 +12,7 @@ let menuItems: [(id: String, title: String, symbol: String)] = [
     ("new-file", "New File…", "doc.badge.plus"),
     ("terminal", "Open Terminal Here", "terminal"),
     ("open-with", "Open Folder With", "arrow.up.forward.app"),
+    ("claude", "Open in Claude", "sparkle"),
     ("copy-path", "Copy Path", "doc.on.doc"),
     ("copy-name", "Copy Name", "character.cursor.ibeam"),
     ("parent-folder", "Go to Parent Folder", "arrow.turn.left.up"),
