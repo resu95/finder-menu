@@ -31,3 +31,12 @@ func testTerminalLaunch() {
     // Terminal comes with macOS, so it's the fallback.
     checkEqual(terminals.last?.id, "com.apple.Terminal")
 }
+
+// Claude parses the link's query like a web form: split on "&", then "+" is a space. The folder must survive that.
+func testClaudeLink() {
+    let dir = #"/Users/me/"odd" folder & co #1+2=3%"#
+    let query = claudeLink(for: dir).flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false) }?.percentEncodedQuery ?? ""
+    let fields = query.split(separator: "&")
+    let folder = fields.first?.dropFirst("folder=".count).replacingOccurrences(of: "+", with: " ").removingPercentEncoding
+    check(fields.count == 1 && folder == dir, "claudeLink carries \(query.debugDescription)")
+}

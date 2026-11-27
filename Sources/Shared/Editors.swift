@@ -29,3 +29,6 @@ let editors: [(id: String, name: String)] = [
     ("com.panic.Nova", "Nova"),
     ("com.barebones.bbedit", "BBEdit"),
 ]
+
+// The Claude desktop app. Open in Claude shows only when it's installed.
+let claudeAppID = "com.anthropic.claudefordesktop"
